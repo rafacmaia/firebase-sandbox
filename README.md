@@ -1,5 +1,7 @@
 # Firebase Sandbox: Booky Project 📚
 
+![Status](https://img.shields.io/badge/status-in--development-yellow)
+
 A simple sandbox project to explore Firebase tools.
 Heavily inspired by [Scrimba](scrimba.com)'s *Learn Firebase* course, but with
 my own twist!
