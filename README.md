@@ -18,3 +18,7 @@ npm run dev
 Once the server is running, open the localhost URL (usually
 [http://localhost:5173](http://localhost:5173)) with your browser to
 see the app.
+
+## Attributions 🎨
+
+- GIF by Disney via GIPHY

@@ -1,16 +1,20 @@
-import googleIcon from "./assets/google-icon.svg";
+import googleIcon from "../assets/auth-icons/google-icon.svg";
 import {
-  authSignInWithGoogle,
-  authSignInWithEmail,
   authCreateAccount,
+  authSignInWithEmail,
+  authSignInWithGoogle,
 } from "./../index.ts";
 
-export default function LoggedOutView() {
+type Props = {
+  onLogin: () => void;
+};
+
+export default function LoggedOutView({ onLogin }: Props) {
   return (
     <>
       <h1 className="font-calistoga w-84 text-center text-6xl">Booky</h1>
       <button
-        className="w-84 flex h-15 cursor-pointer items-center justify-center gap-2 rounded-md border-0 bg-neutral-50 p-3 text-lg font-semibold shadow-[3px_3px_3px_1px_rgba(0,0,0,.25)] transition-shadow duration-200 ease-in-out hover:shadow-none active:shadow-none"
+        className="flex h-15 w-84 cursor-pointer items-center justify-center gap-2 rounded-md border-0 bg-neutral-50 p-3 text-lg font-semibold shadow-[3px_3px_3px_1px_rgba(0,0,0,.25)] transition-shadow duration-200 ease-in-out hover:shadow-none active:shadow-none"
         onClick={authSignInWithGoogle}
       >
         <img className="w-6" src={googleIcon} alt="Google" />
@@ -30,7 +34,7 @@ export default function LoggedOutView() {
         />
         <button
           className="relative h-15 w-84 cursor-pointer rounded-md border-3 border-black bg-yellow-300 p-3 text-center shadow-[0_3px_0_0_rgba(0,0,0,1)] hover:top-[3px] hover:shadow-none active:top-[3px] active:shadow-none"
-          onClick={authSignInWithEmail}
+          onClick={() => authSignInWithEmail(onLogin)}
         >
           Sign In
         </button>
