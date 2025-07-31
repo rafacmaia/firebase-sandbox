@@ -1,5 +1,6 @@
 /* === Imports === */
 import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 /* === Firebase Setup === */
 const firebaseConfig = {
@@ -12,9 +13,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
-console.log("Firebase initialized:");
-console.log(app);
+const auth = getAuth(app);
 
 /* === Functions - Firebase Authentication == */
 
@@ -27,8 +26,23 @@ export function authSignInWithEmail(callback: () => void) {
   callback();
 }
 
-export function authCreateAccount() {
+export function authCreateAccount(email: string, password: string) {
   console.log("Create account with email");
+
+  if (!email || !password) {
+    console.log("Email or password is empty");
+    return;
+  }
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      console.log("Account created successfully");
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
 }
 
 /* === Functions - UI === */
