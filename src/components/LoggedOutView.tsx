@@ -1,6 +1,6 @@
 import googleIcon from "../assets/auth-icons/google-icon.svg";
 import {
-  authCreateAccount,
+  authCreateAccountWithEmail,
   authSignInWithEmail,
   authSignInWithGoogle,
 } from "./../index.ts";
@@ -57,7 +57,7 @@ export default function LoggedOutView({ onLogin }: Props) {
         <button
           className="border-text hover:bg-text active:bg-text active:zinc-white h-11 w-84 cursor-pointer rounded-md border-3 bg-transparent p-1 text-center hover:text-zinc-50"
           type="button"
-          onClick={() => authCreateAccount(email, password)}
+          onClick={() => authCreateAccountWithEmail(email, password, onLogin)}
         >
           Create Account
         </button>

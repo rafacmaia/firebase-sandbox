@@ -1,6 +1,9 @@
 /* === Imports === */
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword
+} from "firebase/auth";
 
 /* === Firebase Setup === */
 const firebaseConfig = {
@@ -9,7 +12,7 @@ const firebaseConfig = {
   projectId: "booky-cb727",
   storageBucket: "booky-cb727.firebasestorage.app",
   messagingSenderId: "354433105854",
-  appId: "1:354433105854:web:3acc1e8b43acab557443ef"
+  appId: "1:354433105854:web:3acc1e8b4 3acab557443ef"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -26,22 +29,30 @@ export function authSignInWithEmail(callback: () => void) {
   callback();
 }
 
-export function authCreateAccount(email: string, password: string) {
-  console.log("Create account with email");
+export function authCreateAccountWithEmail(
+  email: string,
+  password: string,
+  onLogin: () => void
+) {
+  console.log("Request to create account with email and password.");
 
-  if (!email || !password) {
-    console.log("Email or password is empty");
+  if (
+    !email ||
+    !password ||
+    !/^[^@\s]+@[^@\s]+\.[^@\s]+/.test(email) ||
+    password.length < 6
+  ) {
+    console.log("Email or password is invalid.");
     return;
   }
 
   createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-      console.log("Account created successfully");
+      console.log("Account created successfully.");
+      onLogin();
     })
     .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      console.error(error.message);
     });
 }
 

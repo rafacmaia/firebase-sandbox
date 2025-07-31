@@ -5,16 +5,12 @@ import { useState } from "react";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
-  function flipLogin() {
-    setLoggedIn(!loggedIn);
-  }
-
   return (
     <main className="my-12 flex w-screen flex-col items-center justify-center gap-8">
       {loggedIn ? (
-        <LoggedInView onLogOut={flipLogin} />
+        <LoggedInView onLogOut={() => setLoggedIn(false)} />
       ) : (
-        <LoggedOutView onLogin={flipLogin} />
+        <LoggedOutView onLogin={() => setLoggedIn(true)} />
       )}
     </main>
   );
