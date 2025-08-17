@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400..700;1,400..700&family=Calistoga&family=Winky+Rough:ital,wght@0,300..900;1,300..900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
 @import "tailwindcss";
 
+* {
+    /*outline: 1px solid red;*/
+}
+
 @theme inline {
     --color-primary: oklch(0.905 0.182 98.111);
     --color-secondary: oklch(0.987 0.022 95.277);
@@ -12,7 +16,9 @@
     --font-winky-rough: "Winky Rough", sans-serif;
     --font-zain: "Zain", sans-serif;
 }
-
-* {
-    /*outline: 1px solid red;*/
+input:is(:-webkit-autofill, :autofill) {
+    border: 3px solid var(--color-text);
+    font-family: var(--font-body), sans-serif !important;
+    -webkit-text-fill-color: var(--color-text) !important;
+    transition: background-color 9999s ease-in-out 0s;
 }
