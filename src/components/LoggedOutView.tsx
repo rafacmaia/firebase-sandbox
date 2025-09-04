@@ -14,7 +14,7 @@ export default function LoggedOutView() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    function handleSignIn() {
+    function handleEmailSignIn() {
         setError("");
         authSignInWithEmail(email, password)
             .then(() => {
@@ -66,7 +66,7 @@ export default function LoggedOutView() {
                 className="flex flex-col gap-4 text-lg font-semibold"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleSignIn();
+                    handleEmailSignIn();
                 }}
             >
                 {error && (

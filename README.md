@@ -4,7 +4,7 @@
 
 A simple sandbox project to explore Firebase tools.
 Heavily inspired by [Scrimba](scrimba.com)'s *Learn Firebase* course, but with
-my own twist.
+my own spin on it.
 
 ## To Run the Project 🚀
 

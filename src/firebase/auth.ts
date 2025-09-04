@@ -2,21 +2,28 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from "firebase/auth";
 import { auth } from "./config.ts";
 
+export const provider = new GoogleAuthProvider();
+
 export function authSignInWithGoogle() {
-    console.log("Sign in with Google");
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            console.log("User " + result.user + " signed in with Google");
+        })
+        .catch((error) => {
+            console.error(error.message);
+        });
 }
 
-export async function authSignInWithEmail(email: string, password: string) {
-    return await signInWithEmailAndPassword(auth, email, password);
+export function authSignInWithEmail(email: string, password: string) {
+    return signInWithEmailAndPassword(auth, email, password);
 }
 
-export async function authCreateAccountWithEmail(
-    email: string,
-    password: string,
-) {
+export function authCreateAccountWithEmail(email: string, password: string) {
     return createUserWithEmailAndPassword(auth, email, password);
 }
 
