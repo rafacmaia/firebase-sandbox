@@ -1,8 +1,18 @@
-import { authSignOut } from "@fb/auth.ts";
-import Footer from "@components/Footer.tsx";
+import { authSignOut } from "@fb/auth";
+import Footer from "@components/Footer";
 import logoutIcon from "@assets/logout-icon1.svg";
 
 export default function LoggedInView() {
+    function handleLogout() {
+        authSignOut()
+            .then(() => {
+                console.log("User logged out");
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
+    }
+
     return (
         <>
             <main className="flex h-screen w-screen items-center justify-center">
@@ -10,7 +20,7 @@ export default function LoggedInView() {
                     <button
                         type="button"
                         className="mt-5 mr-5 cursor-pointer border-none bg-transparent p-0"
-                        onClick={() => authSignOut()}
+                        onClick={handleLogout}
                     >
                         <img
                             className="size-14 hover:size-15 hover:opacity-65 active:size-15 active:opacity-65"

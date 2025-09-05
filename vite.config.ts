@@ -11,7 +11,7 @@ export default defineConfig({
         alias: {
             "@": path.resolve(__dirname, "./src"),
             "@components": path.resolve(__dirname, "./src/components"),
-            "@fb": path.resolve(__dirname, "./src/firebase"),
+            "@fb": path.resolve(__dirname, "./src/lib/firebase"),
             "@assets": path.resolve(__dirname, "./src/assets"),
             "@utils": path.resolve(__dirname, "./src/utils"),
         },

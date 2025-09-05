@@ -1,51 +1,27 @@
 import { useState } from "react";
 import { CircleSlash } from "lucide-react";
-import {
-    authCreateAccountWithEmail,
-    authSignInWithEmail,
-    authSignInWithGoogle,
-} from "@fb/auth.ts";
-import { getErrorMessage } from "@utils/utils.ts";
+import { createAuthHandlers } from "@/lib/authHandlers.ts";
 import googleIcon from "@assets/auth-icons/google-icon.svg";
 
 export default function LoggedOutView() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [isCreatingAccount, setIsCreatingAccount] = useState(false);
     const [error, setError] = useState("");
-
-    function handleEmailSignIn() {
-        setError("");
-        authSignInWithEmail(email, password)
-            .then(() => {
-                clearAuthFields();
-            })
-            .catch((error) => {
-                console.log(error);
-                setError(getErrorMessage(error.code));
-            });
-    }
-
-    function handleCreateAccount() {
-        setError("");
-        setLoading(true);
-        authCreateAccountWithEmail(email, password)
-            .then(() => {
-                clearAuthFields();
-            })
-            .catch((error) => {
-                console.log(error);
-                setError(getErrorMessage(error.code));
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }
 
     function clearAuthFields() {
         setEmail("");
         setPassword("");
     }
+
+    const { handleSignInGoogle, handleSignInEmail, handleCreateAccount } =
+        createAuthHandlers(
+            setError,
+            setLoading,
+            setIsCreatingAccount,
+            clearAuthFields,
+        );
 
     return (
         <>
@@ -54,7 +30,7 @@ export default function LoggedOutView() {
             {/* Google Sign In*/}
             <button
                 className="flex h-15 w-84 cursor-pointer items-center justify-center gap-2 rounded-md border-0 bg-zinc-50 p-3 text-lg font-semibold shadow-[3px_3px_3px_1px_rgba(0,0,0,.25)] transition-shadow duration-200 ease-in-out hover:shadow-none active:shadow-none"
-                onClick={authSignInWithGoogle}
+                onClick={handleSignInGoogle}
                 disabled={loading}
             >
                 <img className="w-6" src={googleIcon} alt="Google" />
@@ -66,7 +42,7 @@ export default function LoggedOutView() {
                 className="flex flex-col gap-4 text-lg font-semibold"
                 onSubmit={(e) => {
                     e.preventDefault();
-                    handleEmailSignIn();
+                    handleSignInEmail(email, password);
                 }}
             >
                 {error && (
@@ -78,10 +54,11 @@ export default function LoggedOutView() {
                 <input
                     className="h-15 w-84 cursor-text rounded-md border-3 border-text bg-secondary p-3 text-center font-light placeholder-neutral-500/70 focus:outline-none"
                     aria-label="Email"
-                    type="text"
+                    type="email"
                     placeholder="Email"
                     autoComplete="email"
                     value={email}
+                    disabled={loading}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
@@ -91,6 +68,7 @@ export default function LoggedOutView() {
                     placeholder="Password"
                     autoComplete="current-password"
                     value={password}
+                    disabled={loading}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button
@@ -101,12 +79,14 @@ export default function LoggedOutView() {
                     Sign In
                 </button>
                 <button
-                    className={`active:zinc-white h-11 w-84 rounded-md border-3 border-text p-1 text-center hover:bg-text hover:text-zinc-50 active:bg-text ${loading ? "cursor-default bg-text text-zinc-50 opacity-80" : "cursor-pointer bg-transparent"}`}
+                    className={`active:zinc-white h-11 w-84 rounded-md border-3 border-text p-1 text-center hover:bg-text hover:text-zinc-50 active:bg-text ${isCreatingAccount ? "cursor-default bg-text text-zinc-50 opacity-80" : "cursor-pointer bg-transparent"}`}
                     type="button"
-                    onClick={handleCreateAccount}
+                    onClick={() => handleCreateAccount(email, password)}
                     disabled={loading}
                 >
-                    {loading ? "Creating account..." : "Create Account"}
+                    {isCreatingAccount
+                        ? "Creating account..."
+                        : "Create Account"}
                 </button>
             </form>
         </>

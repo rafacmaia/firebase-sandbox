@@ -19,7 +19,7 @@
         "./src/components/*"
       ],
       "@fb/*": [
-        "./src/firebase/*"
+        "./src/lib/firebase/*"
       ],
       "@assets/*": [
         "./src/assets/*"
